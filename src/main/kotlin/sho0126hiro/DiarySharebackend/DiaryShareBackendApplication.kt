@@ -1,4 +1,4 @@
-package sho0126hiro.DiarySharebackend
+package sho0126hiro.DiaryShareBackend
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication

@@ -1,4 +1,4 @@
-package sho0126hiro.DiarySharebackend
+package sho0126hiro.DiaryShareBackend
 
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest
