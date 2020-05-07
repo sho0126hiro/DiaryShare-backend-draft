@@ -1,19 +1,20 @@
-package sho0126hiro.DiaryShareBackend.Security
+package sho0126hiro.DiaryShareBackend.security.filter
 
-import io.jsonwebtoken.Header
 import io.jsonwebtoken.Jwts
-import org.springframework.boot.autoconfigure.session.NonUniqueSessionRepositoryException
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter
+import sho0126hiro.DiaryShareBackend.security.Common
 import java.io.IOException
-import javax.crypto.SecretKey
 import javax.servlet.FilterChain
 import javax.servlet.ServletException
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
+/**
+ * 認可処理
+ */
 class JWTAuthorizationFilter(
         authenticationManager: AuthenticationManager
 ) : BasicAuthenticationFilter(authenticationManager) {
@@ -21,7 +22,7 @@ class JWTAuthorizationFilter(
     @Throws(IOException::class, ServletException::class)
     override fun doFilterInternal(req: HttpServletRequest, res: HttpServletResponse, chain: FilterChain) {
         val header: String? = req.getHeader(Common.Header.NAME)
-        if(header == null || header.startsWith(Common.Header.TOKEN_PREFIX)) {
+        if(header == null || !header.startsWith(Common.Header.TOKEN_PREFIX)) {
             chain.doFilter(req, res)
             return
         }
@@ -31,7 +32,7 @@ class JWTAuthorizationFilter(
     }
 
     private fun getAuthentication(req: HttpServletRequest): UsernamePasswordAuthenticationToken? {
-        val token: String = req.getHeader(Common.Header.NAME)
+        val token: String? = req.getHeader(Common.Header.NAME)
         if (token == null) return null
         val user: String = Jwts.parser()
                 .setSigningKey(Common.SERVER_SECRET.toByteArray())

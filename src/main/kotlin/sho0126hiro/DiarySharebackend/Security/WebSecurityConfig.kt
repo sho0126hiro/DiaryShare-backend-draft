@@ -1,4 +1,4 @@
-package sho0126hiro.DiaryShareBackend.Security
+package sho0126hiro.DiaryShareBackend.security
 
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder
@@ -8,8 +8,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
-import sho0126hiro.DiaryShareBackend.domain.service.UserService
-
+import sho0126hiro.DiaryShareBackend.security.filter.JWTAuthenticationFilter
+import sho0126hiro.DiaryShareBackend.security.filter.JWTAuthorizationFilter
 
 @Configuration
 @EnableWebSecurity
@@ -21,13 +21,14 @@ class WebSecurityConfig : WebSecurityConfigurerAdapter() {
                 .and()
                 .authorizeRequests()
                 // antMatchersの引数のURLには認証の必要なし
-                .antMatchers("/", "/join", "/login").permitAll()
+                .antMatchers("credential/get", "/credential/register").permitAll()
                 // それ以外は認証必要
                 .anyRequest().authenticated()
                 .and()
                 // logout config
                 .logout()
-                .and().csrf().disable()
+                .and()
+                .csrf().disable()
                 // 認証フィルター
                 .addFilter(JWTAuthenticationFilter(authenticationManager(), bCryptPasswordEncoder()))
                 // 認可フィルター
@@ -35,9 +36,18 @@ class WebSecurityConfig : WebSecurityConfigurerAdapter() {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
     }
 
-    fun bCryptPasswordEncoder(): BCryptPasswordEncoder{
+    fun bCryptPasswordEncoder(): BCryptPasswordEncoder {
         return BCryptPasswordEncoder()
     }
+
+//    override fun configure(auth: AuthenticationManagerBuilder) {
+//        auth.inMemoryAuthentication()
+//                .passwordEncoder(bCryptPasswordEncoder())
+//                .withUser(Common.UserParam.USERNAME_PARAMATER)
+//                .password("pass")
+//                .roles("USER")
+//    }
+
 
     @Throws(Exception::class)
     fun configureAuth(auth: AuthenticationManagerBuilder) {

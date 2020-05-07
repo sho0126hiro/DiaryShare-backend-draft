@@ -1,33 +1,37 @@
-package sho0126hiro.DiaryShareBackend.Security
+package sho0126hiro.DiaryShareBackend.security.filter
 
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.SignatureAlgorithm
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.Authentication
+import org.springframework.security.core.AuthenticationException
 import org.springframework.security.core.userdetails.User
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher
-import sho0126hiro.DiaryShareBackend.Security.resource.AuthRequest
-import sho0126hiro.DiaryShareBackend.application.resource.UserBody
+import sho0126hiro.DiaryShareBackend.application.resource.CredentialInfo
+import sho0126hiro.DiaryShareBackend.security.Common
 import java.io.IOException
-import java.time.LocalDateTime
 import java.util.*
-import javax.naming.AuthenticationException
 import javax.servlet.FilterChain
 import javax.servlet.ServletException
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
+import kotlin.collections.ArrayList
 
-class JWTAuthenticationFilter(
-        authenticationManager: AuthenticationManager,
-        bCryptPasswordEncoder: BCryptPasswordEncoder
+/**
+ * 認証を実装するフィルタ
+ */
+class JWTAuthenticationFilter (
+        private val authenticationManager_: AuthenticationManager,
+        private val bCryptPasswordEncoder: BCryptPasswordEncoder
 ): UsernamePasswordAuthenticationFilter() {
-
-    init{
-        setRequiresAuthenticationRequestMatcher(AntPathRequestMatcher("/login", "POST"))
+    init {
+        // ログイン用のpathを設定
+        setRequiresAuthenticationRequestMatcher(AntPathRequestMatcher("/credential/get", "POST"))
         usernameParameter = Common.UserParam.USERNAME_PARAMATER
         passwordParameter = Common.UserParam.PASSWORD_PARAMATER
     }
@@ -38,10 +42,10 @@ class JWTAuthenticationFilter(
                                        res: HttpServletResponse?): Authentication? {
         return try {
             // requestパラメータからユーザ情報を読み取る
-            val user: AuthRequest = ObjectMapper().readValue(req.inputStream, AuthRequest::class.java)
-            authenticationManager.authenticate(
+            val user: CredentialInfo = jacksonObjectMapper().readValue<CredentialInfo>(req.inputStream,CredentialInfo::class.java)
+            authenticationManager_.authenticate(
                     UsernamePasswordAuthenticationToken(
-                            user.id,
+                            user.email,
                             user.pass,
                             ArrayList())
             )
@@ -63,4 +67,5 @@ class JWTAuthenticationFilter(
                 .compact()
         res.addHeader(Common.Header.NAME, Common.Header.TOKEN_PREFIX + token)
     }
+
 }

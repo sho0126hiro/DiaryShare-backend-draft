@@ -1,15 +1,13 @@
 package sho0126hiro.DiaryShareBackend.domain.`object`
 
 import sho0126hiro.DiaryShareBackend.infrastructure.entity.UserEntity
-import java.util.*
 
-class User(
-        private val id: Int,
-        private val name: String
+data class User (
+        var id: String? = null,
+        var name: String? = null,
+        var email: String? = null
 ){
-    fun toEntity(): UserEntity {
-        return UserEntity(
-                id = id, name = name, created_at = Date(), updated_at = Date()
-        )
-    }
+//    fun toEntity(): UserEntity{
+//        return UserEntity(name= name, email=email)
+//    }
 }

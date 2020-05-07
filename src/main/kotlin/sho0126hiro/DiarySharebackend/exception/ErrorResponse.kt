@@ -2,7 +2,6 @@ package sho0126hiro.DiaryShareBackend.exception
 
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
-import sho0126hiro.DiaryShareBackend.exception.RequestExceptionHandler.*
 
 class ErrorResponse (val message: String){
     companion object {
