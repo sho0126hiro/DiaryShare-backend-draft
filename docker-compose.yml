@@ -1,0 +1,14 @@
+version: '3'
+services:
+  db:
+    image: mysql
+    container_name: kotlin_springboot_mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: master
+      MYSQL_USER: sboot
+      MYSQL_PASSWORD: sboot
+      TZ: 'Asia/Tokyo'
+    command: mysqld --character-set-server=utf8mb4 --explicit_defaults_for_timestamp=true
+    ports:
+      - "3306:3306"
