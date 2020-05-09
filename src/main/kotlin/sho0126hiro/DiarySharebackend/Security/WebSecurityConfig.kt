@@ -40,15 +40,6 @@ class WebSecurityConfig : WebSecurityConfigurerAdapter() {
         return BCryptPasswordEncoder()
     }
 
-//    override fun configure(auth: AuthenticationManagerBuilder) {
-//        auth.inMemoryAuthentication()
-//                .passwordEncoder(bCryptPasswordEncoder())
-//                .withUser(Common.UserParam.USERNAME_PARAMATER)
-//                .password("pass")
-//                .roles("USER")
-//    }
-
-
     @Throws(Exception::class)
     fun configureAuth(auth: AuthenticationManagerBuilder) {
         auth.userDetailsService(userDetailsService)

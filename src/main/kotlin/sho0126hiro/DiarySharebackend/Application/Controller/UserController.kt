@@ -1,15 +1,43 @@
 package sho0126hiro.DiaryShareBackend.application.controller
 
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
+import sho0126hiro.DiaryShareBackend.application.resource.ResponseBody
+import sho0126hiro.DiaryShareBackend.application.resource.UserBody
+import sho0126hiro.DiaryShareBackend.domain.service.UserService
+import javax.validation.Valid
 
 @RestController
 @RequestMapping("user")
-class UserController {
+class UserController (
+        val userService: UserService
+){
 
+    /**
+     * test
+     */
     @GetMapping("/test")
     fun test(): String{
         return "ok"
     }
+
+    /**
+     * edit name
+     * user: User(id, name, null...)
+     */
+    @PostMapping("/name/update")
+    fun updateName(@Valid @RequestBody user: UserBody): ResponseBody {
+        val userBody: UserBody = userService.updateName(user.toDomainObject())
+        return ResponseBody("name update success", userBody)
+    }
+
+    /**
+     * edit bio
+     * user: User(id, bio, null...)
+     */
+    @PostMapping("/bio/update")
+    fun updateBio(@Valid @RequestBody user: UserBody): ResponseBody {
+        val userbody: UserBody = userService.updateBio(user.toDomainObject())
+        return ResponseBody("bio update success", userbody)
+    }
+
 }

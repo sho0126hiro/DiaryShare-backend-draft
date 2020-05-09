@@ -17,23 +17,34 @@ data class UserEntity(
         @Id
         @Column(name = "id")
         @GeneratedValue(strategy = GenerationType.IDENTITY)
-        private val id: Int,
+        private val id: Int? = null,
 
         @Column(name = "name")
-        private val name: String,
+        private var name: String,
 
         @Column(name = "email")
-        private val email: String,
+        private var email: String,
+
+        @Column(name = "biography")
+        private var biography: String? = null,
 
         @Column(name = "created_at")
         @CreatedDate
-        private val created_at: String,
+        private val created_at: String? = null,
 
         @Column(name = "updated_at")
         @LastModifiedDate
-        private val updated_at: String
+        private val updated_at: String? = null
 ){
-    fun toDomainUser(): User{
-        return User(id.toString(),name,email)
+    fun toDomainUser(): User {
+        return User(id.toString(), name, email, biography)
+    }
+
+    fun setName(name: String){
+        this.name = name
+    }
+
+    fun setBiography(bio: String){
+        this.biography = bio
     }
 }
