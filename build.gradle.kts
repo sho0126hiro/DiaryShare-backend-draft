@@ -3,6 +3,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
 	id("org.springframework.boot") version "2.2.6.RELEASE"
 	id("io.spring.dependency-management") version "1.0.9.RELEASE"
+	id("org.flywaydb.flyway") version "6.4.1"
 	kotlin("jvm") version "1.3.71"
 	kotlin("plugin.spring") version "1.3.71"
 	kotlin("plugin.jpa") version "1.3.71"
@@ -41,4 +42,10 @@ tasks.withType<KotlinCompile> {
 		freeCompilerArgs = listOf("-Xjsr305=strict")
 		jvmTarget = "1.8"
 	}
+}
+
+flyway{
+	url="jdbc:mysql://localhost:3306/master"
+	user="sboot"
+	password="sboot"
 }
