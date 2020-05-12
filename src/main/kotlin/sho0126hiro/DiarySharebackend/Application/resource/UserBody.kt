@@ -2,7 +2,7 @@ package sho0126hiro.DiaryShareBackend.application.resource
 
 import sho0126hiro.DiaryShareBackend.domain.`object`.User
 
-class UserBody (
+data class UserBody (
         val id: String,
         val name: String? = null,
         val email: String? = null,
