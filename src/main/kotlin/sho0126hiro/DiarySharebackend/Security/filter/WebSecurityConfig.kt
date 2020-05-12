@@ -1,4 +1,4 @@
-package sho0126hiro.DiaryShareBackend.security
+package sho0126hiro.DiaryShareBackend.security.filter
 
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder
@@ -8,14 +8,13 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
-import sho0126hiro.DiaryShareBackend.security.filter.JWTAuthenticationFilter
-import sho0126hiro.DiaryShareBackend.security.filter.JWTAuthorizationFilter
 
 @Configuration
 @EnableWebSecurity
 class WebSecurityConfig : WebSecurityConfigurerAdapter() {
     private lateinit var userDetailsService: UserDetailsService
-    protected override fun configure(http: HttpSecurity) {
+    protected override fun configure(http: HttpSecurity
+    ) {
         http
                 .cors()
                 .and()

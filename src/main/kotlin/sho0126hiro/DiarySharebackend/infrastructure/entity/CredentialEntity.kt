@@ -8,7 +8,7 @@ import javax.persistence.Table
 
 @Entity
 @Table(name = "credentials")
-class CredentialEntity (
+data class CredentialEntity (
         @Id
         @Column(name = "login_id")
         val login_id: String,

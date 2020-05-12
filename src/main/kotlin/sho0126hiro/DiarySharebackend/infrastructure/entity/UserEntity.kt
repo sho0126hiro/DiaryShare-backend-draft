@@ -30,11 +30,11 @@ data class UserEntity(
 
         @Column(name = "created_at")
         @CreatedDate
-        private val created_at: String? = null,
+        private val createdAt: String? = null,
 
         @Column(name = "updated_at")
         @LastModifiedDate
-        private val updated_at: String? = null
+        private val updatedAt: String? = null
 ){
     fun toDomainUser(): User {
         return User(id.toString(), name, email, biography)
