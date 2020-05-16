@@ -1,7 +1,6 @@
 package sho0126hiro.DiaryShareBackend.domain.`object`
 
 import sho0126hiro.DiaryShareBackend.application.resource.CommentBody
-import sho0126hiro.DiaryShareBackend.application.validator.DiaryStatusValidator
 import sho0126hiro.DiaryShareBackend.infrastructure.entity.CommentEntity
 import sho0126hiro.DiaryShareBackend.infrastructure.entity.uuidToBytes
 import java.util.*
