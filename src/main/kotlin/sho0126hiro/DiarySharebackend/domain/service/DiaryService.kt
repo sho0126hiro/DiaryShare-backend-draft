@@ -10,16 +10,16 @@ class DiaryService (
         val diaryRepository: DiaryRepository
 ){
     fun create(diary: Diary): DiaryBody{
-        return diaryRepository.create(diary).toDiaryBody()
+        return diaryRepository.create(diary).toBody()
     }
 
     fun edit(diary: Diary): DiaryBody{
-        return diaryRepository.edit(diary).toDiaryBody()
+        return diaryRepository.edit(diary).toBody()
     }
 
     fun changeStatus(diary: Diary): DiaryBody {
         return diaryRepository.changeStatus(
                 id = requireNotNull(diary.id),
-                status = requireNotNull(diary.status)).toDiaryBody()
+                status = requireNotNull(diary.status)).toBody()
     }
 }

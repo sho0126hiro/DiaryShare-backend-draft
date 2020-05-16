@@ -2,6 +2,7 @@ package sho0126hiro.DiaryShareBackend.application.resource
 
 import sho0126hiro.DiaryShareBackend.application.validator.DiaryStatusValidator
 import sho0126hiro.DiaryShareBackend.domain.`object`.Diary
+import java.util.*
 
 data class DiaryBody (
         val id: String? = null,
@@ -14,13 +15,14 @@ data class DiaryBody (
         val createdAt: String? = null
 ) {
     fun toDomainObject(): Diary {
+        var uuidDiaryId: UUID? = null
+        if(id != null) uuidDiaryId = UUID.fromString(id)
         return Diary(
-                id = id,
-                userId = userId,
+                id = uuidDiaryId,
+                userId = UUID.fromString(userId),
                 status = status,
                 title = title,
-                content = content,
-                createdAt = createdAt
+                content = content
         )
     }
 
