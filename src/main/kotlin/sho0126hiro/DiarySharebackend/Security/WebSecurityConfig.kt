@@ -1,4 +1,4 @@
-package sho0126hiro.DiaryShareBackend.security.filter
+package sho0126hiro.DiaryShareBackend.security
 
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder
@@ -8,6 +8,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
+import sho0126hiro.DiaryShareBackend.security.filter.JWTAuthenticationFilter
+import sho0126hiro.DiaryShareBackend.security.filter.JWTAuthorizationFilter
 
 @Configuration
 @EnableWebSecurity

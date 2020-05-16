@@ -2,9 +2,10 @@ package sho0126hiro.DiaryShareBackend.domain.`object`
 
 import sho0126hiro.DiaryShareBackend.application.resource.UserBody
 import sho0126hiro.DiaryShareBackend.infrastructure.entity.UserEntity
+import java.util.*
 
 data class User (
-        val id: String? = null,
+        val id: UUID? = null,
         val name: String? = null,
         val email: String? = null,
         val bio: String? = null
@@ -18,7 +19,7 @@ data class User (
     }
 
     fun toUserBody(): UserBody {
-        if(id != null) return UserBody(id,name,email,bio)
+        if(id !== null) return UserBody(id.toString(),name,email,bio)
         TODO("Error Handling")
     }
 

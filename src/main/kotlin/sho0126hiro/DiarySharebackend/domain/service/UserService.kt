@@ -22,7 +22,7 @@ class UserService (
      */
     fun updateName(user: User): UserBody {
         return userRepository.updateName(
-                requireNotNull(user.id.toString()),
+                requireNotNull(user.id),
                 requireNotNull(user.name)).toUserBody()
     }
 
@@ -31,7 +31,7 @@ class UserService (
      */
     fun updateBio(user: User): UserBody {
         return userRepository.updateBio(
-                requireNotNull(user.id.toString()),
+                requireNotNull(user.id),
                 requireNotNull(user.bio)).toUserBody()
     }
 }

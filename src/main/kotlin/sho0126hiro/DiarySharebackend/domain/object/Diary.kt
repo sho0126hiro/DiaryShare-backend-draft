@@ -2,23 +2,25 @@ package sho0126hiro.DiaryShareBackend.domain.`object`
 
 import sho0126hiro.DiaryShareBackend.application.resource.DiaryBody
 import sho0126hiro.DiaryShareBackend.infrastructure.entity.DiaryEntity
+import sho0126hiro.DiaryShareBackend.infrastructure.entity.uuidToBytes
+import java.util.*
 
 data class Diary (
-        val id: String? = null,
-        val userId: String,
+        val id: UUID? = null,
+        val userId: UUID,
         val status: String? = null,
         val title: String? = null,
         val content: String? = null,
         val createdAt: String? = null
 ){
-    fun toDiaryBody(): DiaryBody {
+    fun toBody(): DiaryBody {
         return DiaryBody(
-                id, userId, status, title, content, createdAt
+                id.toString(), userId.toString(), status, title, content, createdAt
         )
     }
-    fun toEntity(): DiaryEntity{
+    fun toEntity(): DiaryEntity {
         return DiaryEntity(
-                userId = userId.toInt(),
+                userId = uuidToBytes(userId),
                 status = requireNotNull(status),
                 title = requireNotNull(title),
                 content = requireNotNull(content)
