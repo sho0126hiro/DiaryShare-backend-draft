@@ -2,15 +2,11 @@ package sho0126hiro.DiaryShareBackend.infrastructure.entity
 
 import org.hibernate.annotations.CreationTimestamp
 import org.hibernate.annotations.UpdateTimestamp
-import org.springframework.data.annotation.CreatedDate
-import org.springframework.data.annotation.LastModifiedBy
-import org.springframework.data.annotation.LastModifiedDate
 import org.springframework.data.jpa.domain.support.AuditingEntityListener
 import sho0126hiro.DiaryShareBackend.domain.`object`.User
 import java.time.LocalDateTime
 import java.util.*
 import javax.persistence.*
-import kotlin.properties.Delegates
 
 @Entity
 @Table(name = "Users")
@@ -21,12 +17,21 @@ class UserEntity(
         @Column(name = "id")
         private val id: ByteArray = uuidToBytes(UUID.randomUUID()),
 
+
+        /**
+         * アカウント名
+         * 主にユーザ検索などで利用する
+         * credential.loginIdと同じ
+         */
+        @Column(name = "username")
+        private val username: String,
+
+        /**
+         * 表示名
+         */
         @Column(name = "name")
         private var name: String,
 
-        /**
-         * credentials.login_idと同じ
-         */
         @Column(name = "email")
         private var email: String,
 
@@ -35,7 +40,7 @@ class UserEntity(
 
         @field:CreationTimestamp
         @Column(name = "created_at", nullable = false)
-        private var createdAt: LocalDateTime? = null,
+        private val createdAt: LocalDateTime? = null,
 
         @field:UpdateTimestamp
         @Column(name = "updated_at", nullable = false)
@@ -43,7 +48,7 @@ class UserEntity(
 
 ){
     fun toDomainUser(): User {
-        return User(bytesToUuid(id), name, email, biography)
+        return User(bytesToUuid(id), username, name,  email, biography)
     }
 
     fun setName(name: String){

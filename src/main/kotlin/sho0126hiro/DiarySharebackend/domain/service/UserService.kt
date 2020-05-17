@@ -2,6 +2,7 @@ package sho0126hiro.DiaryShareBackend.domain.service
 
 import org.springframework.stereotype.Service
 import sho0126hiro.DiaryShareBackend.application.resource.UserBody
+import sho0126hiro.DiaryShareBackend.application.resource.UserSearchResult
 import sho0126hiro.DiaryShareBackend.domain.`object`.User
 import sho0126hiro.DiaryShareBackend.domain.repository.UserRepository
 
@@ -14,7 +15,7 @@ class UserService (
      * @param user: User(id,email, null...)
      */
     fun create(user: User): UserBody {
-        return userRepository.create(user).toUserBody()
+        return userRepository.create(user).toBody()
     }
 
     /**
@@ -23,7 +24,7 @@ class UserService (
     fun updateName(user: User): UserBody {
         return userRepository.updateName(
                 requireNotNull(user.id),
-                requireNotNull(user.name)).toUserBody()
+                requireNotNull(user.name)).toBody()
     }
 
     /**
@@ -32,6 +33,15 @@ class UserService (
     fun updateBio(user: User): UserBody {
         return userRepository.updateBio(
                 requireNotNull(user.id),
-                requireNotNull(user.bio)).toUserBody()
+                requireNotNull(user.bio)).toBody()
+    }
+
+    /**
+     * usernameによる検索
+     */
+    fun findByUsername(username: String): UserSearchResult{
+        return userRepository.findByUsername(
+                username
+        ).toSearchResult()
     }
 }

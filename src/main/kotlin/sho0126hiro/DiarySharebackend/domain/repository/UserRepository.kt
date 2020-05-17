@@ -6,7 +6,7 @@ import java.util.*
 
 interface UserRepository {
     fun create(user: User): User
-    fun getAll()
+    fun findByUsername(username: String): User
     fun updateName(id: UUID, name: String): User
     fun updateBio(id: UUID, biography: String): User
 }

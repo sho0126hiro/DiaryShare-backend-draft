@@ -10,7 +10,7 @@ import javax.persistence.Table
 data class CredentialEntity (
 
         /**
-         * users.emailと同じ
+         * users.usernameと同じ
          */
         @Id
         @Column(name = "login_id")

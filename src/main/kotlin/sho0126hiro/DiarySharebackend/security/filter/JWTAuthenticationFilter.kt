@@ -44,7 +44,7 @@ class JWTAuthenticationFilter (
             val user: CredentialInfo = jacksonObjectMapper().readValue<CredentialInfo>(req.inputStream,CredentialInfo::class.java)
             authenticationManager_.authenticate(
                     UsernamePasswordAuthenticationToken(
-                            user.email,
+                            user.username,
                             user.pass,
                             ArrayList())
             )
@@ -66,5 +66,4 @@ class JWTAuthenticationFilter (
                 .compact()
         res.addHeader(Common.Header.NAME, Common.Header.TOKEN_PREFIX + token)
     }
-
 }

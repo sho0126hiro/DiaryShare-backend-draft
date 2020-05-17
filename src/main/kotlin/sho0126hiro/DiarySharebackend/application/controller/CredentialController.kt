@@ -17,6 +17,10 @@ class  CredentialController (
         private val credentialService: CredentialService,
         private val userService: UserService
 ){
+    /**
+     * 登録
+     * credentialInfo(username, email, pass, name)
+     */
     @PostMapping("/register")
     fun register(@Valid @RequestBody credential: CredentialInfo): ResponseBody {
         credentialService.register(credential.toDomainObject())
