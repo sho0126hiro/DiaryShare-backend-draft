@@ -10,8 +10,7 @@ fun uuidToBytes(uuid: UUID): ByteArray{
     return buffer.array()
 }
 
-fun bytesToUuid(bytes: ByteArray): UUID? {
-    if(bytes === null) return null
+fun bytesToUuid(bytes: ByteArray): UUID {
     val buffer = ByteBuffer.wrap(bytes)
     return UUID(buffer.long, buffer.long)
 }

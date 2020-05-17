@@ -20,6 +20,7 @@ class UserDetailsServiceImpl (
         if(username == null) throw UsernameNotFoundException(username)
         val credential: CredentialEntity? = credentialRepository.findByLoginId(username)
         if(credential == null) throw UsernameNotFoundException(username)
+        println(credential.login_id)
         return User.withUsername(credential.login_id)
                 .password("{bcrypt}"+credential.pass)
                 .roles("USER")

@@ -6,4 +6,5 @@ import java.util.*
 
 interface UserJpaRepository: JpaRepository<UserEntity, String> {
     fun findById(id: ByteArray): Optional<UserEntity>
+    fun findByUsername(username: String): Optional<UserEntity>
 }

@@ -28,7 +28,7 @@ class CommentEntity (
 
         @field:CreationTimestamp
         @Column(name = "created_at", nullable = false)
-        private var createdAt: LocalDateTime? = null,
+        private val createdAt: LocalDateTime? = null,
 
         @field:UpdateTimestamp
         @Column(name = "updated_at", nullable = false)
@@ -37,8 +37,8 @@ class CommentEntity (
         fun toDomainObject(): Comment{
                 return Comment(
                         bytesToUuid(id),
-                        requireNotNull(bytesToUuid(userId)),
-                        requireNotNull(bytesToUuid(diaryId)),
+                        bytesToUuid(userId),
+                        bytesToUuid(diaryId),
                         content,
                         createdAt.toString()
                 )

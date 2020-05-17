@@ -5,11 +5,11 @@ import org.springframework.security.crypto.password.PasswordEncoder
 import sho0126hiro.DiaryShareBackend.infrastructure.entity.CredentialEntity
 
 data class Credential (
-        val email: String,
+        val username: String,
         var password: String
 ){
     fun toEntity(): CredentialEntity {
-        return CredentialEntity(email,password)
+        return CredentialEntity(username,password)
     }
     fun encrypt(encoder: PasswordEncoder){
         password = encoder.encode(password)

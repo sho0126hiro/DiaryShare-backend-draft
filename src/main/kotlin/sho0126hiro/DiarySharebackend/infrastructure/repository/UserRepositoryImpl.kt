@@ -17,10 +17,6 @@ class UserRepositoryImpl (
         return userJpaRepository.save(user.credentialToEntity()).toDomainUser()
     }
 
-    override fun getAll() {
-        TODO("Not yet implemented")
-    }
-
     override fun updateName(id: UUID, name: String): User {
         val user: UserEntity? = userJpaRepository.findById(uuidToBytes(id)).orElse(null)
         if(user != null){
@@ -38,5 +34,13 @@ class UserRepositoryImpl (
             return userJpaRepository.save(user).toDomainUser()
         }
         TODO("Error Handling")
+    }
+
+    override fun findByUsername(username: String): User {
+        val user: UserEntity? = userJpaRepository.findByUsername(username).orElse(null)
+        if(user != null){
+            return user.toDomainUser()
+        }
+        TODO("Error handling")
     }
 }

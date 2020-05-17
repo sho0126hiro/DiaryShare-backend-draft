@@ -35,7 +35,7 @@ class DiaryEntity (
 
         @field:CreationTimestamp
         @Column(name = "created_at", nullable = false)
-        private var createdAt: LocalDateTime? = null,
+        private val createdAt: LocalDateTime? = null,
 
         @field:UpdateTimestamp
         @Column(name = "updated_at", nullable = false)
@@ -43,7 +43,7 @@ class DiaryEntity (
 ){
     fun toDomainObject(): Diary {
         return Diary(
-                bytesToUuid(id), requireNotNull(bytesToUuid(userId)), status, title, content, createdAt.toString()
+                bytesToUuid(id), bytesToUuid(userId), status, title, content, createdAt.toString()
         )
     }
 
