@@ -1,9 +1,8 @@
 package sho0126hiro.DiaryShareBackend.application.controller
 
 import org.springframework.web.bind.annotation.*
+import sho0126hiro.DiaryShareBackend.application.resource.*
 import sho0126hiro.DiaryShareBackend.application.resource.ResponseBody
-import sho0126hiro.DiaryShareBackend.application.resource.UserBody
-import sho0126hiro.DiaryShareBackend.application.resource.UserSearchResult
 import sho0126hiro.DiaryShareBackend.domain.service.UserService
 import javax.validation.Valid
 
@@ -50,6 +49,19 @@ class UserController (
         return ResponseBody(
                 "target user: ${result.username} exist",
                 result
+        )
+    }
+
+    /**
+     * 自分のフレンド一覧: Usersのリストの取得
+     * 自分のIDを送るため、Post
+     * body: IdOnlyBody(id = userId)
+     */
+    @PostMapping("/friend_list")
+    fun getFriendList(@Valid @RequestBody body: IdOnlyBody): ResponseBody{
+        val l: UserFriendList = userService.getFriendList(body.id)
+        return ResponseBody(
+                "ok", l
         )
     }
 

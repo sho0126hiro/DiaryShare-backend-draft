@@ -16,7 +16,7 @@ class CommentRepositoryImpl (
     }
 
     override fun edit(comment: Comment): Comment {
-        val c: CommentEntity = commentJpaRepository.findById(
+        val c: CommentEntity? = commentJpaRepository.findById(
                 uuidToBytes(requireNotNull(comment.id))).orElse(null)
         if(c != null) {
             c.setContent(comment.content)

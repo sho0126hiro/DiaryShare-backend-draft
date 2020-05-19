@@ -2,9 +2,14 @@ package sho0126hiro.DiaryShareBackend.domain.service
 
 import org.springframework.stereotype.Service
 import sho0126hiro.DiaryShareBackend.application.resource.UserBody
+import sho0126hiro.DiaryShareBackend.application.resource.UserFriendList
 import sho0126hiro.DiaryShareBackend.application.resource.UserSearchResult
+import sho0126hiro.DiaryShareBackend.domain.`object`.Friend
+import sho0126hiro.DiaryShareBackend.domain.`object`.FriendList
 import sho0126hiro.DiaryShareBackend.domain.`object`.User
 import sho0126hiro.DiaryShareBackend.domain.repository.UserRepository
+import sho0126hiro.DiaryShareBackend.infrastructure.entity.FriendEntity
+import java.util.*
 
 @Service
 class UserService (
@@ -43,5 +48,18 @@ class UserService (
         return userRepository.findByUsername(
                 username
         ).toSearchResult()
+    }
+
+    /**
+     * フレンド一覧の取得
+     */
+    fun getFriendList(userId: String): UserFriendList {
+        val friendEntityList: List<FriendEntity> = userRepository.getFriendList(
+                UUID.fromString(userId)
+        )
+        return FriendList(
+                friendEntityList.map {
+                    it.toDomainObjectWithTargetUserdata()
+                }).toUserFriendList(userId)
     }
 }

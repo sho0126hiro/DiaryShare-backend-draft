@@ -8,4 +8,5 @@ interface FriendRepository {
     fun create(friendEntity: FriendEntity): Friend
     fun changeStatus(friendEntity: FriendEntity): Friend
     fun delete(userId: UUID, friendId: UUID)
+    fun findPairByUserIdAndFriendId(friendEntity: FriendEntity): Pair<FriendEntity, FriendEntity>
 }

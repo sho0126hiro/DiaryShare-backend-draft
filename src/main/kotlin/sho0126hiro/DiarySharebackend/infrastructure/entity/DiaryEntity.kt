@@ -40,6 +40,7 @@ class DiaryEntity (
         @field:UpdateTimestamp
         @Column(name = "updated_at", nullable = false)
         private val updatedAt: LocalDateTime? = null
+
 ){
     fun toDomainObject(): Diary {
         return Diary(
