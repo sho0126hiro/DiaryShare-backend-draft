@@ -3,6 +3,7 @@ package sho0126hiro.DiaryShareBackend.infrastructure.repository
 import org.springframework.stereotype.Repository
 import sho0126hiro.DiaryShareBackend.domain.`object`.User
 import sho0126hiro.DiaryShareBackend.domain.repository.UserRepository
+import sho0126hiro.DiaryShareBackend.infrastructure.entity.FriendEntity
 import sho0126hiro.DiaryShareBackend.infrastructure.entity.UserEntity
 import sho0126hiro.DiaryShareBackend.infrastructure.entity.uuidToBytes
 import sho0126hiro.DiaryShareBackend.infrastructure.repository.jpaRepository.UserJpaRepository
@@ -42,5 +43,13 @@ class UserRepositoryImpl (
             return user.toDomainUser()
         }
         TODO("Error handling")
+    }
+
+    override fun getFriendList(id: UUID): List<FriendEntity> {
+        val user: UserEntity? = userJpaRepository.findById(
+                uuidToBytes(id)
+        ).orElse(null)
+        if(user != null) return user.getFriendList()
+        TODO("Error Handling")
     }
 }

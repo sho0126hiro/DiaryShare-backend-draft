@@ -7,7 +7,7 @@ import java.util.*
 
 class FriendBody(
         val userId: String,   // リクエスト送信者のid
-        val friendUsername: String, // 相手のusername
+        val targetUsername: String, // 相手のusername
         @field:FriendStatusValidator
         val status: String = Constant.FriendStatus.APPLIED,
         val createdAt: String? = null,
@@ -16,7 +16,7 @@ class FriendBody(
     fun toDomainObject(): Friend{
         return Friend(
                 userId = UUID.fromString(userId),
-                friendUsername = friendUsername,
+                targetUsername = targetUsername,
                 status = status
         )
     }

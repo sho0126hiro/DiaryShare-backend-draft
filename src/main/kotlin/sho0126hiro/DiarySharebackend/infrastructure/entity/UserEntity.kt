@@ -4,9 +4,11 @@ import org.hibernate.annotations.CreationTimestamp
 import org.hibernate.annotations.UpdateTimestamp
 import org.springframework.data.jpa.domain.support.AuditingEntityListener
 import sho0126hiro.DiaryShareBackend.domain.`object`.User
+import sho0126hiro.DiaryShareBackend.domain.service.FriendService
 import java.time.LocalDateTime
 import java.util.*
 import javax.persistence.*
+import kotlin.collections.ArrayList
 
 @Entity
 @Table(name = "Users")
@@ -16,7 +18,6 @@ class UserEntity(
         @Id
         @Column(name = "id")
         private val id: ByteArray = uuidToBytes(UUID.randomUUID()),
-
 
         /**
          * アカウント名
@@ -44,7 +45,10 @@ class UserEntity(
 
         @field:UpdateTimestamp
         @Column(name = "updated_at", nullable = false)
-        private val updatedAt: LocalDateTime? = null
+        private val updatedAt: LocalDateTime? = null,
+
+        @OneToMany(cascade = [CascadeType.ALL], fetch = FetchType.EAGER, mappedBy = "userId")
+        var friends: List<FriendEntity> = emptyList()
 
 ){
     fun toDomainUser(): User {
@@ -57,5 +61,13 @@ class UserEntity(
 
     fun setBiography(bio: String){
         this.biography = bio
+    }
+
+    /**
+     * ユーザに紐づくフレンド一覧を取得する
+     * フレンド一覧の中には、フレンドのUser情報も含まれている
+     */
+    fun getFriendList(): List<FriendEntity> {
+        return friends
     }
 }

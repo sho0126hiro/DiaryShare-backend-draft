@@ -14,45 +14,51 @@ class FriendRepositoryImpl(
 ): FriendRepository {
 
     /**
-     * 申請するユーザが入る
-     * userId: 申請するユーザ, friendId: 申請されたユーザ
+     * フレンド追加（申請中なども可能）
+     * userId: 申請するユーザ, targetId: 申請されたユーザ
+     * userId, targetIdは逆順でもDBに追加されます
+     * （とりあえず取得処理が楽になるので）
      */
     override fun create(friendEntity: FriendEntity): Friend{
         return friendJpaRepository.save(friendEntity).toDomainObject()
     }
 
+
+    override fun findPairByUserIdAndFriendId(friendEntity: FriendEntity): Pair<FriendEntity, FriendEntity>{
+        val f1: FriendEntity? = friendJpaRepository.findByUserIdAndTargetUserId(
+                userId = friendEntity.targetUserId, targetUserId = friendEntity.userId
+        ).orElse(null)
+        val f2: FriendEntity? = friendJpaRepository.findByUserIdAndTargetUserId(
+                userId = friendEntity.userId, targetUserId = friendEntity.targetUserId
+        ).orElse(null)
+        if(f1 != null && f2 != null) return f1 to f2
+        TODO("Error Handling")
+    }
+    
     /**
-     * 現状、申請されたユーザがここに入る
-     * userId: 申請されたユーザ, friendId: 申請したユーザ
-     * ---
-     * ブロック機能を追加する場合, userId, friendIDのどちらが申請した側か判定する必要がある。
-     * https://github.com/sho0126hiro/DiaryShare-backend/issues/22
-     *
+     * 'Block'Function does not implement
+     * ACCEPT or APPLIED
      */
     override fun changeStatus(friendEntity: FriendEntity): Friend{
-        val f: FriendEntity? = friendJpaRepository.findByUserIdAndFriendId(
-                userId = friendEntity.friendId,
-                friendId = friendEntity.userId
-        ).orElse(null)
-        if(f != null){
-            f.setStatus(friendEntity.getStatus())
-            return friendJpaRepository.save(f).toDomainObject()
-        }
-        TODO("Error Handling")
+        val (f1: FriendEntity, f2: FriendEntity) = findPairByUserIdAndFriendId(friendEntity)
+        f1.setStatus(friendEntity.getStatus())
+        f2.setStatus(friendEntity.getStatus())
+        friendJpaRepository.save(f2)
+        return friendJpaRepository.save(f1).toDomainObject()
     }
 
     /**
      * 申請者 userId, 相手: friendId
      */
     override fun delete(userId: UUID, friendId: UUID){
-        var f: FriendEntity? = friendJpaRepository.findByUserIdAndFriendId(
+        var f: FriendEntity? = friendJpaRepository.findByUserIdAndTargetUserId(
                 userId = uuidToBytes(friendId),
-                friendId = uuidToBytes(userId)
+                targetUserId = uuidToBytes(userId)
         ).orElse(null)
-        if(f != null) return friendJpaRepository.delete(f)
-        f = friendJpaRepository.findByUserIdAndFriendId(
+        if(f != null) friendJpaRepository.delete(f)
+        f = friendJpaRepository.findByUserIdAndTargetUserId(
                 userId = uuidToBytes(userId),
-                friendId = uuidToBytes(friendId)
+                targetUserId = uuidToBytes(friendId)
         ).orElse(null)
         if(f != null) return friendJpaRepository.delete(f)
         TODO()

@@ -2,6 +2,7 @@ package sho0126hiro.DiaryShareBackend.application.controller
 
 import org.springframework.web.bind.annotation.*
 import sho0126hiro.DiaryShareBackend.application.resource.FriendBody
+import sho0126hiro.DiaryShareBackend.application.resource.IdOnlyBody
 import sho0126hiro.DiaryShareBackend.application.resource.ResponseBody
 import sho0126hiro.DiaryShareBackend.domain.service.FriendService
 import javax.validation.Valid
