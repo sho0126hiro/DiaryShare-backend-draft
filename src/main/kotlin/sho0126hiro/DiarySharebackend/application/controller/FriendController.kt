@@ -4,6 +4,7 @@ import org.springframework.web.bind.annotation.*
 import sho0126hiro.DiaryShareBackend.application.resource.FriendBody
 import sho0126hiro.DiaryShareBackend.application.resource.IdOnlyBody
 import sho0126hiro.DiaryShareBackend.application.resource.ResponseBody
+import sho0126hiro.DiaryShareBackend.application.resource.UserFriendList
 import sho0126hiro.DiaryShareBackend.domain.service.FriendService
 import javax.validation.Valid
 
@@ -47,5 +48,18 @@ class FriendController (
     fun delete(@Valid @RequestBody friendBody: FriendBody): ResponseBody{
         friendService.delete(friendBody.toDomainObject())
         return ResponseBody("delete success", {})
+    }
+
+    /**
+     * フレンドリスト取得
+     * 自分のIDを送るため、Post
+     * body: IdOnlyBody(id = userId)
+     */
+    @PostMapping("/list")
+    fun getFriendList(@Valid @RequestBody body: IdOnlyBody): ResponseBody{
+        val l: UserFriendList = friendService.getFriendList(body.id)
+        return ResponseBody(
+                "ok", l
+        )
     }
 }

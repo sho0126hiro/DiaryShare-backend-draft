@@ -52,17 +52,4 @@ class UserController (
         )
     }
 
-    /**
-     * 自分のフレンド一覧: Usersのリストの取得
-     * 自分のIDを送るため、Post
-     * body: IdOnlyBody(id = userId)
-     */
-    @PostMapping("/friend_list")
-    fun getFriendList(@Valid @RequestBody body: IdOnlyBody): ResponseBody{
-        val l: UserFriendList = userService.getFriendList(body.id)
-        return ResponseBody(
-                "ok", l
-        )
-    }
-
 }

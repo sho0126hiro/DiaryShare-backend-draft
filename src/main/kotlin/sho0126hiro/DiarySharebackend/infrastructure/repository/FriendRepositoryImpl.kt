@@ -4,6 +4,7 @@ import org.springframework.stereotype.Repository
 import sho0126hiro.DiaryShareBackend.domain.`object`.Friend
 import sho0126hiro.DiaryShareBackend.domain.repository.FriendRepository
 import sho0126hiro.DiaryShareBackend.infrastructure.entity.FriendEntity
+import sho0126hiro.DiaryShareBackend.infrastructure.entity.UserEntity
 import sho0126hiro.DiaryShareBackend.infrastructure.entity.uuidToBytes
 import sho0126hiro.DiaryShareBackend.infrastructure.repository.jpaRepository.FriendJpaRepository
 import java.util.*
@@ -48,7 +49,7 @@ class FriendRepositoryImpl(
     }
 
     /**
-     * 申請者 userId, 相手: friendId
+     * リクエストをしたuserId, 相手: targetId
      */
     override fun delete(userId: UUID, friendId: UUID){
         var f: FriendEntity? = friendJpaRepository.findByUserIdAndTargetUserId(

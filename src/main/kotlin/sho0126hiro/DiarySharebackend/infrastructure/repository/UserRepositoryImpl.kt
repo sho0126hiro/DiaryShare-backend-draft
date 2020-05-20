@@ -39,17 +39,16 @@ class UserRepositoryImpl (
 
     override fun findByUsername(username: String): User {
         val user: UserEntity? = userJpaRepository.findByUsername(username).orElse(null)
-        if(user != null){
+        if (user != null) {
             return user.toDomainUser()
         }
         TODO("Error handling")
     }
 
-    override fun getFriendList(id: UUID): List<FriendEntity> {
-        val user: UserEntity? = userJpaRepository.findById(
-                uuidToBytes(id)
-        ).orElse(null)
-        if(user != null) return user.getFriendList()
-        TODO("Error Handling")
+    override fun findById(userId: UUID): UserEntity {
+        return userJpaRepository.findById(
+                uuidToBytes(userId)
+        ).orElse(null) ?: TODO()
     }
+
 }

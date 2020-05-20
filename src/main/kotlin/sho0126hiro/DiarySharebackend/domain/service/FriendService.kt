@@ -2,9 +2,14 @@ package sho0126hiro.DiaryShareBackend.domain.service
 
 import org.springframework.stereotype.Service
 import sho0126hiro.DiaryShareBackend.application.resource.FriendBody
+import sho0126hiro.DiaryShareBackend.application.resource.UserFriendList
 import sho0126hiro.DiaryShareBackend.domain.`object`.Friend
+import sho0126hiro.DiaryShareBackend.domain.`object`.FriendList
 import sho0126hiro.DiaryShareBackend.domain.repository.FriendRepository
 import sho0126hiro.DiaryShareBackend.domain.repository.UserRepository
+import sho0126hiro.DiaryShareBackend.infrastructure.entity.FriendEntity
+import sho0126hiro.DiaryShareBackend.infrastructure.entity.UserEntity
+import sho0126hiro.DiaryShareBackend.infrastructure.entity.uuidToBytes
 import java.util.*
 
 @Service
@@ -44,4 +49,17 @@ class FriendService (
                 friendId = targetId
         )
     }
+
+    /**
+     * フレンドリストの取得
+     */
+    fun getFriendList(userId: String): UserFriendList {
+        val friendEntityList: List<FriendEntity> = userRepository.findById(
+                UUID.fromString(userId)).getFriendList()
+        return FriendList(
+                friendEntityList.map {
+                    it.toDomainObjectWithTargetUserdata()
+                }).toUserFriendList(userId)
+    }
+
 }

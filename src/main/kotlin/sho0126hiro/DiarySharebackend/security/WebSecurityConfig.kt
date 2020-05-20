@@ -24,7 +24,9 @@ class WebSecurityConfig : WebSecurityConfigurerAdapter() {
                 // antMatchersの引数のURLには認証の必要なし
                 .antMatchers("credential/get", "/credential/register").permitAll()
                 // それ以外は認証必要
-                .anyRequest().authenticated()
+                // developing mode
+                .anyRequest().permitAll()
+//                .anyRequest().authenticated()
                 .and()
                 // logout config
                 .logout()

@@ -49,17 +49,4 @@ class UserService (
                 username
         ).toSearchResult()
     }
-
-    /**
-     * フレンド一覧の取得
-     */
-    fun getFriendList(userId: String): UserFriendList {
-        val friendEntityList: List<FriendEntity> = userRepository.getFriendList(
-                UUID.fromString(userId)
-        )
-        return FriendList(
-                friendEntityList.map {
-                    it.toDomainObjectWithTargetUserdata()
-                }).toUserFriendList(userId)
-    }
 }
