@@ -1,12 +1,15 @@
 package sho0126hiro.DiaryShareBackend.application.controller
 
+import org.apache.coyote.Response
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import sho0126hiro.DiaryShareBackend.application.resource.DiaryBody
+import sho0126hiro.DiaryShareBackend.application.resource.IdOnlyBody
 import sho0126hiro.DiaryShareBackend.application.resource.ResponseBody
+import sho0126hiro.DiaryShareBackend.application.resource.UserDiaryList
 import sho0126hiro.DiaryShareBackend.domain.`object`.Diary
 import sho0126hiro.DiaryShareBackend.domain.service.DiaryService
 import javax.validation.Valid
@@ -58,4 +61,28 @@ class DiaryController (
                 "change_status success", requireNotNull(diaryBody.status)
         )
     }
+
+    /**
+     * 自分の全ての日記を取得する
+     */
+    @PostMapping("/list/all")
+    fun getAll(@Valid @RequestBody idOnlyBody: IdOnlyBody): ResponseBody {
+        val userDiaryList: UserDiaryList = diaryService.getAll(idOnlyBody.id)
+        return ResponseBody(
+                "ok", userDiaryList
+        )
+    }
+
+
+    /**
+     *  フレンドの日記を取得する
+     */
+    @PostMapping("/friend_index")
+    fun getFriendsDiaries(@Valid @RequestBody idOnlyBody: IdOnlyBody): ResponseBody {
+
+        return ResponseBody(
+                "ok", "ok"
+        )
+    }
+
 }

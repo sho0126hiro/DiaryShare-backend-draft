@@ -27,3 +27,19 @@ data class DiaryBody (
     }
 
 }
+
+/**
+ * 利用者に紐づく日記一覧
+ */
+data class UserDiaryList(
+        val userId: String, // リクエスト送信者
+        val diaryList: List<UserDiary>
+){
+    data class UserDiary(
+            val id: String,
+            val status: String,
+            val title: String,
+            val content: String,
+            val createdAt: String
+    )
+}

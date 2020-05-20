@@ -44,8 +44,8 @@ class Friend (
 /**
  * List<Friend>を扱う
  */
-class FriendList (
-        val friendList: List<Friend>
+class FriendList(
+        private val friendList: List<Friend>
 ){
 
     /**

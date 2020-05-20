@@ -8,8 +8,6 @@ import sho0126hiro.DiaryShareBackend.domain.`object`.FriendList
 import sho0126hiro.DiaryShareBackend.domain.repository.FriendRepository
 import sho0126hiro.DiaryShareBackend.domain.repository.UserRepository
 import sho0126hiro.DiaryShareBackend.infrastructure.entity.FriendEntity
-import sho0126hiro.DiaryShareBackend.infrastructure.entity.UserEntity
-import sho0126hiro.DiaryShareBackend.infrastructure.entity.uuidToBytes
 import java.util.*
 
 @Service
@@ -55,7 +53,7 @@ class FriendService (
      */
     fun getFriendList(userId: String): UserFriendList {
         val friendEntityList: List<FriendEntity> = userRepository.findById(
-                UUID.fromString(userId)).getFriendList()
+                UUID.fromString(userId)).getFriendSet().toList()
         return FriendList(
                 friendEntityList.map {
                     it.toDomainObjectWithTargetUserdata()

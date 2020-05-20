@@ -3,6 +3,7 @@ package sho0126hiro.DiaryShareBackend.infrastructure.entity
 import org.hibernate.annotations.CreationTimestamp
 import org.hibernate.annotations.UpdateTimestamp
 import org.springframework.data.jpa.domain.support.AuditingEntityListener
+import sho0126hiro.DiaryShareBackend.domain.`object`.Diary
 import sho0126hiro.DiaryShareBackend.domain.`object`.User
 import sho0126hiro.DiaryShareBackend.domain.service.FriendService
 import java.time.LocalDateTime
@@ -48,7 +49,10 @@ class UserEntity(
         private val updatedAt: LocalDateTime? = null,
 
         @OneToMany(cascade = [CascadeType.ALL], fetch = FetchType.EAGER, mappedBy = "userId")
-        var friends: List<FriendEntity> = emptyList()
+        var friends: Set<FriendEntity> = emptySet(),
+
+        @OneToMany(cascade = [CascadeType.ALL], fetch = FetchType.EAGER, mappedBy = "userId")
+        var diaries: Set<DiaryEntity> = emptySet()
 
 ){
     fun toDomainUser(): User {
@@ -67,7 +71,14 @@ class UserEntity(
      * ユーザに紐づくフレンド一覧を取得する
      * フレンド一覧の中には、フレンドのUser情報も含まれている
      */
-    fun getFriendList(): List<FriendEntity> {
+    fun getFriendSet(): Set<FriendEntity> {
         return friends
+    }
+
+    /**
+     * ユーザに紐づく日記一覧の取得
+     */
+    fun getDiarySet(): Set<DiaryEntity> {
+        return diaries
     }
 }

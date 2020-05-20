@@ -25,21 +25,3 @@ data class UserSearchResult(
         val bio: String?
 )
 
-/**
- * ユーザに紐づくフレンド一覧を返す
- */
-data class UserFriendList(
-    val userId: String, // リクエスト送信者のuserId
-    val friendList: List<UserFriendListElement>
-){
-    /**
-     * UserFrindListの要素
-     */
-    data class UserFriendListElement (
-             val targetUsername: String,
-             val targetName: String,
-             val status: String,
-             val createdAt: String,
-             val updateAt: String
-    )
-}
